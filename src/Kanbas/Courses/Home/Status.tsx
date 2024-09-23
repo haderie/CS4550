@@ -4,7 +4,10 @@ export default function CourseStatus() {
         <h2>Course Status</h2>
         <button>Unpublish</button>
         <button>Publish</button>
-        {/* Complete on your own */}
+        <button>Import Existing Content</button>
+        <button>New Announcement</button>
+        <button>New Analytics</button>
+
         <button>View Course Notifications</button>
       </div>
     );

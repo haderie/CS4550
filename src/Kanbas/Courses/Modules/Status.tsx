@@ -3,7 +3,11 @@ export default function ModuleStatus() {
       <div id="wd-module-status">
         <button>Collapse All</button>
         <button>View Progress</button>
-        {/* Complete on your own */}
+        <select>
+            <option value={"Publish All"}> Publish All</option>
+            <option value={"Publish Select"}> Publish Select</option>
+        </select>
+
         <button> + Module</button>
       </div>
     );

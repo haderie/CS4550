@@ -24,6 +24,10 @@ export default function AssignmentEditor() {
             <td>
                 <select id="wd-group">
                     <option value={"Assignments"}> Assignments</option>
+                    <option value={"Quiz"}> Quiz</option>
+                    <option value={"Exam"}> Exam</option>
+                    <option value={"Project"}> Project</option>
+
                 </select>
             </td>
         </tr> <br />

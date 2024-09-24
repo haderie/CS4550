@@ -27,6 +27,11 @@ export default function TOC() {
           Kanbas
         </Link>
       </li>
+      <li>
+        <Link id="wd-a3" to="https://github.com/haderie/kanbas-react-web-app/tree/a1">
+          Github
+        </Link>
+      </li>
     </ul>
   );
 }

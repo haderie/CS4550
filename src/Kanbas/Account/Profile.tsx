@@ -21,7 +21,8 @@ export default function Profile() {
       <input id="wd-email" value="alice@wonderland" type="email" />
       <br />
       <select id="wd-role">
-        <option value="USER">User</option>
+        <option value="USER"> 
+          User</option>
         <option value="ADMIN">Admin</option>
         <option value="FACULTY">Faculty</option>
         <option value="STUDENT">Student</option>

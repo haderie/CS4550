@@ -16,7 +16,11 @@ export default function AssignmentEditor() {
 
           <textarea id="wd-description" className="form-control mb-2">
             The assignment is available online Submit a link to the landing page
-            of
+            of your Web application running on Netlify The landing page should
+            include the following: Your full name and section Links to each of
+            the lab assignments Link to the Kanbas application Links to all
+            relevant source code repositories The Kanbas application should
+            include a link to navigate back to the landing page.
           </textarea>
         </div>
       </div>
@@ -69,15 +73,20 @@ export default function AssignmentEditor() {
 
           {/* Submission Group */}
           <div className="row align-items-start justify-content-end mb-3">
-            <div className="col-auto text-end">
+            <div className="col-auto float-end">
               <label htmlFor="wd-submission-type">Submission Type</label>
             </div>
 
             <div className="col-6 border border-secondary-subtle rounded">
-              <select id="wd-submission-type" className="form-select mb-4 mt-3">
-                <option value={"Online"}> Online</option>
-                <option value={"In-Person"}> In-Person</option>
-              </select>
+              <div className="col-auto text-end">
+                <select
+                  id="wd-submission-type"
+                  className="form-select mb-4 mt-3"
+                >
+                  <option value={"Online"}> Online</option>
+                  <option value={"In-Person"}> In-Person</option>
+                </select>
+              </div>
 
               <div className="mb-3 mt-2">
                 <div className="mb-3">
@@ -92,6 +101,7 @@ export default function AssignmentEditor() {
                     type="checkbox"
                     name="check-entry"
                     id="wd-text-entry"
+                    className="me-1"
                   />
                   <label htmlFor="wd-text-entry"> Text Entry</label>
                 </div>
@@ -101,6 +111,7 @@ export default function AssignmentEditor() {
                     type="checkbox"
                     name="check-entry"
                     id="wd-website-url"
+                    className="me-1"
                   />
                   <label htmlFor="wd-website-url"> Website URL</label>
                 </div>
@@ -110,6 +121,7 @@ export default function AssignmentEditor() {
                     type="checkbox"
                     name="check-entry"
                     id="wd-media-recordings"
+                    className="me-1"
                   />
                   <label htmlFor="wd-media-recordings"> Media Recordings</label>
                 </div>
@@ -119,6 +131,7 @@ export default function AssignmentEditor() {
                     type="checkbox"
                     name="check-entry"
                     id="wd-student-annotation"
+                    className="me-1"
                   />
                   <label htmlFor="wd-student-annotation">
                     {" "}
@@ -131,6 +144,7 @@ export default function AssignmentEditor() {
                     type="checkbox"
                     name="check-entry"
                     id="wd-file-upload"
+                    className="me-1"
                   />
                   <label htmlFor="wd-file-upload"> File Uploads</label>
                 </div>
@@ -163,7 +177,7 @@ export default function AssignmentEditor() {
 
               <div className="row mb-5">
                 <div className="col">
-                  <label htmlFor="wd-available-from">
+                  <label className="form-label" htmlFor="wd-available-from">
                     {" "}
                     <b> Available From </b>{" "}
                   </label>

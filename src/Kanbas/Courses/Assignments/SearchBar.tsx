@@ -6,21 +6,9 @@ export default function SearchBar() {
       <input
         id="wd-search-assignment"
         placeholder="Search for Assignments"
-        style={{
-          padding: '10px 40px',
-          border: '.5px solid #ccc',
-          borderRadius: '5px',
-
-        }}
+        className="form-control ps-5 pe-2 py-2 border rounded"
       />
-      <CiSearch
-        style={{
-          position: 'absolute',
-          top: '25%',
-          left: '15px', 
-          fontSize: '1.5rem',
-        }}
-      />
+      <CiSearch className="position-absolute top-50 start-0 translate-middle-y ms-3 fs-4" />
     </div>
   );
 }

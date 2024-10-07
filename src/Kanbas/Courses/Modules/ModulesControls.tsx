@@ -1,6 +1,7 @@
 import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { MdDoNotDisturbAlt } from "react-icons/md";
 
 export default function ModulesControls() {
   return (
@@ -49,8 +50,8 @@ export default function ModulesControls() {
               className="dropdown-item"
               href="#"
             >
-              <GreenCheckmark />
-              Publish modules only
+              <MdDoNotDisturbAlt />
+              Unpublish modules only
             </a>
           </li>
           <li>
@@ -59,12 +60,24 @@ export default function ModulesControls() {
               className="dropdown-item"
               href="#"
             >
-              <GreenCheckmark />
-              Publish modules only
+              <MdDoNotDisturbAlt />
+              Unpublish all modules and items
             </a>
           </li>
         </ul>
       </div>
+      <button
+        id="wd-view-progress"
+        className="btn btn-lg btn-secondary me-1 float-end"
+      >
+        View Progress
+      </button>
+      <button
+        id="wd-collapse-all"
+        className="btn btn-lg btn-secondary me-1 float-end"
+      >
+        Collapse All
+      </button>
       {/* Implement the View Progress and Collapse All buttons with IDs wd-view-progress and wd-collapse-all */}
     </div>
   );

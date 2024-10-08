@@ -12,7 +12,7 @@ export default function Courses() {
     <div id="wd-courses">
       <h2 className="text-danger">
         <FaAlignJustify className="me-4 fs-4 mb-1" />
-        Course 1235{" "}
+        Course 1234{" "}
       </h2>{" "}
       <hr />
       <div className="d-flex">

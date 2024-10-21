@@ -1,12 +1,29 @@
-import Flex from "../../../Labs/Lab2/Flex";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import AssignmentBar from "./AssignmentBar";
 import SearchBar from "./SearchBar";
 import { BsGripVertical, BsPlus } from "react-icons/bs";
 import { IoEllipsisVertical } from "react-icons/io5";
+import * as db from "../../Database";
+import { Link, useParams } from "react-router-dom";
+
+const assignment = db.assignments;
 
 export default function Assignments() {
+  const { cid } = useParams();
+
+  const formatDate = (newDate: string | number | Date) => {
+    const date = new Date(newDate);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  };
+
   return (
     <div
       id="wd-assignments"
@@ -33,77 +50,32 @@ export default function Assignments() {
       </div>
 
       <ul id="wd-assignment-list" className="list-group rounded-0">
-        <li className="wd-assignment-list-item list-group-item p-3 ps-1">
-          <a
-            className="wd-assignment-link d-flex justify-content-between align-items-center text-decoration-none text-dark"
-            href="#/Kanbas/Courses/1234/Assignments/123"
-          >
-            <div className="d-flex align-items-center">
-              <AssignmentControlButtons />
-              <div className="ms-2">
-                <h4>
-                  <b>A1</b>
-                </h4>
-                <h5>
-                  <span className="text-danger"> Multiple Modules </span> |{" "}
-                  <b>Not available</b> Until May 6 at 12:00 AM |
-                </h5>
-                <h5>
-                  <b>Due</b> May 13 at 11:59 PM | 100 pts
-                </h5>
+        {assignment.map((asgn) => (
+          <li className="wd-assignment-list-item list-group-item p-3 ps-1">
+            <Link
+              className="wd-assignment-link d-flex justify-content-between align-items-center text-decoration-none text-dark"
+              to={`/Kanbas/Courses/${cid}/Assignments/${asgn._id}`}
+            >
+              <div className="d-flex align-items-center">
+                <AssignmentControlButtons />
+                <div className="ms-2">
+                  <h4>
+                    <b>{asgn.title}</b>
+                  </h4>
+                  <h5>
+                    <span className="text-danger"> Multiple Modules </span> |{" "}
+                    <b>Not available</b> Until {formatDate(asgn.availableFrom)}{" "}
+                    |
+                  </h5>
+                  <h5>
+                    <b>Due</b> {formatDate(asgn.dueDate)} | {asgn.points} pts
+                  </h5>
+                </div>
               </div>
-            </div>
-            <LessonControlButtons />
-          </a>
-        </li>
-
-        <li className="wd-assignment-list-item list-group-item p-3 ps-1">
-          <a
-            className="wd-assignment-link d-flex justify-content-between align-items-center text-decoration-none text-dark"
-            href="#/Kanbas/Courses/1234/Assignments/123"
-          >
-            <div className="d-flex align-items-center">
-              <AssignmentControlButtons />
-              <div className="ms-2">
-                <h4>
-                  <b>A2</b>
-                </h4>
-                <h5>
-                  <span className="text-danger"> Multiple Modules </span> |{" "}
-                  <b>Not available</b> Until April 15 at 12:00 AM |
-                </h5>
-                <h5>
-                  <b>Due</b> Jun 13 at 11:59 PM | 100 pts
-                </h5>
-              </div>
-            </div>
-            <LessonControlButtons />
-          </a>
-        </li>
-
-        <li className="wd-assignment-list-item list-group-item p-3 ps-1">
-          <a
-            className="wd-assignment-link d-flex justify-content-between align-items-center text-decoration-none text-dark"
-            href="#/Kanbas/Courses/1234/Assignments/123"
-          >
-            <div className="d-flex align-items-center">
-              <AssignmentControlButtons />
-              <div className="ms-2">
-                <h4>
-                  <b>A3</b>
-                </h4>
-                <h5>
-                  <span className="text-danger"> Multiple Modules </span> |{" "}
-                  <b>Not available</b> Until Jun 10 at 12:00 AM |
-                </h5>
-                <h5>
-                  <b>Due</b> Jun 20 at 11:59 PM | 100 pts
-                </h5>
-              </div>
-            </div>
-            <LessonControlButtons />
-          </a>
-        </li>
+              <LessonControlButtons />
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );

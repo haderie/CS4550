@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import * as db from "./Database";
+import img from "../images/NEU_logo.png";
 export default function Dashboard() {
   const courses = db.courses;
   return (
@@ -18,7 +19,11 @@ export default function Dashboard() {
                   to={`/Kanbas/Courses/${course._id}/Home`}
                   className="wd-dashboard-course-link text-decoration-none text-dark"
                 >
-                  <img src="/images/reactjs.jpg" width="100%" height={160} />
+                  <img
+                    src={require(`../images/${course.img}`)}
+                    width="100%"
+                    height={160}
+                  />
                   <div className="card-body">
                     <h5 className="wd-dashboard-course-title card-title">
                       {course.name}{" "}

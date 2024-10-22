@@ -1,5 +1,4 @@
 import { Link, useParams } from "react-router-dom";
-import * as db from "../../Database";
 import { assignments } from "../../Database";
 
 export default function AssignmentEditor() {
@@ -178,7 +177,12 @@ export default function AssignmentEditor() {
                   {" "}
                   <b> Assign to </b>
                 </label>
-                <input type="text" id="wd-assign-to" className="form-control" />
+                <input
+                  type="text"
+                  id="wd-assign-to"
+                  className="form-control"
+                  value="Everyone"
+                />
               </div>
 
               <div className="mb-3">

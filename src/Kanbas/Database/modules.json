@@ -112,5 +112,23 @@
     "name": "Spacecraft Systems Engineering",
     "description": "Overview of spacecraft systems and subsystems engineering.",
     "course": "RS103"
+  },
+  {
+    "_id": "M401",
+    "name": "Ancient Hydraulic Systems",
+    "description": "Introduction to ancient hydraulic engineering practices.",
+    "course": "RS121"
+  },
+  {
+    "_id": "M402",
+    "name": "Hydraulic Systems in Mesopotamia",
+    "description": "Overview of hydraulic systems in ancient Mesopotamia.",
+    "course": "RS121"
+  },
+  {
+    "_id": "M403",
+    "name": "Hydraulic Systems in the Indus Valley",
+    "description": "Study of hydraulic systems in the Indus Valley civilization.",
+    "course": "RS121"
   }
 ]

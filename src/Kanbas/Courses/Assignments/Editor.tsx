@@ -1,4 +1,10 @@
+import { Link, useParams } from "react-router-dom";
+import { assignments } from "../../Database";
+
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = assignments.find((assignment) => assignment._id === aid);
+
   return (
     <div id="wd-assignments-editor" className="container mt-4">
       <div className="row mb-4 justify-content-end me-2">
@@ -10,17 +16,13 @@ export default function AssignmentEditor() {
             <input
               id="wd-name"
               className="form-control mb-2"
-              placeholder="100"
+              value={assignment?.title}
+              placeholder="Insert assignment title"
             />
           </div>
 
           <textarea id="wd-description" className="form-control mb-2">
-            The assignment is available online Submit a link to the landing page
-            of your Web application running on Netlify The landing page should
-            include the following: Your full name and section Links to each of
-            the lab assignments Link to the Kanbas application Links to all
-            relevant source code repositories The Kanbas application should
-            include a link to navigate back to the landing page.
+            {assignment?.description}
           </textarea>
         </div>
       </div>
@@ -36,7 +38,8 @@ export default function AssignmentEditor() {
               <input
                 id="wd-points"
                 className="form-control mb-2"
-                placeholder="100"
+                value={assignment?.points}
+                placeholder="Enter points"
               />
             </div>
           </div>
@@ -49,7 +52,11 @@ export default function AssignmentEditor() {
               </label>
             </div>
             <div className="col-6">
-              <select id="wd-group" className="form-select mb-2">
+              <select
+                id="wd-group"
+                className="form-select mb-2"
+                value={assignment?.assignmentType}
+              >
                 <option value={"Assignments"}> Assignments</option>
                 <option value={"Quiz"}> Quiz</option>
                 <option value={"Exam"}> Exam</option>
@@ -82,6 +89,7 @@ export default function AssignmentEditor() {
                 <select
                   id="wd-submission-type"
                   className="form-select mb-4 mt-3"
+                  value={assignment?.submissionType}
                 >
                   <option value={"Online"}> Online</option>
                   <option value={"In-Person"}> In-Person</option>
@@ -102,6 +110,7 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-text-entry"
                     className="me-1"
+                    checked={assignment?.submissionOptions?.textEntry}
                   />
                   <label htmlFor="wd-text-entry"> Text Entry</label>
                 </div>
@@ -112,6 +121,7 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-website-url"
                     className="me-1"
+                    checked={assignment?.submissionOptions?.websiteURL}
                   />
                   <label htmlFor="wd-website-url"> Website URL</label>
                 </div>
@@ -122,6 +132,7 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-media-recordings"
                     className="me-1"
+                    checked={assignment?.submissionOptions?.mediaRecordings}
                   />
                   <label htmlFor="wd-media-recordings"> Media Recordings</label>
                 </div>
@@ -132,6 +143,7 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-student-annotation"
                     className="me-1"
+                    checked={assignment?.submissionOptions?.studentAnnotation}
                   />
                   <label htmlFor="wd-student-annotation">
                     {" "}
@@ -145,6 +157,7 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-file-upload"
                     className="me-1"
+                    checked={assignment?.submissionOptions?.fileUploads}
                   />
                   <label htmlFor="wd-file-upload"> File Uploads</label>
                 </div>
@@ -164,15 +177,25 @@ export default function AssignmentEditor() {
                   {" "}
                   <b> Assign to </b>
                 </label>
-                <input type="text" id="wd-assign-to" className="form-control" />
+                <input
+                  type="text"
+                  id="wd-assign-to"
+                  className="form-control"
+                  value="Everyone"
+                />
               </div>
 
               <div className="mb-3">
                 <label htmlFor="wd-due-date">
                   {" "}
-                  <b> Assign to </b>
+                  <b> Due </b>
                 </label>
-                <input type="date" id="wd-due-date" className="form-control" />
+                <input
+                  type="datetime-local"
+                  id="wd-due-date"
+                  className="form-control"
+                  value={assignment?.dueDate}
+                />
               </div>
 
               <div className="row mb-5">
@@ -183,9 +206,10 @@ export default function AssignmentEditor() {
                   </label>
                   <div className="col">
                     <input
-                      type="date"
+                      type="datetime-local"
                       id="wd-available-from"
                       className="form-control"
+                      value={assignment?.availableFrom}
                     />
                   </div>
                 </div>
@@ -196,9 +220,10 @@ export default function AssignmentEditor() {
                   </label>
                   <div className="col">
                     <input
-                      type="date"
+                      type="datetime-local"
                       id="wd-available-until"
                       className="form-control"
+                      value={assignment?.availableUntil}
                     />
                   </div>
                 </div>
@@ -210,8 +235,18 @@ export default function AssignmentEditor() {
       <hr />
       {/* Buttons */}
       <div className="d-flex justify-content-end mt-4">
-        <button className="btn btn-outline-secondary me-2">Cancel</button>
-        <button className="btn btn-danger">Save</button>
+        <Link
+          to={`/Kanbas/Courses/${cid}/Assignments`}
+          className="btn btn-outline-secondary me-2"
+        >
+          Cancel
+        </Link>
+        <Link
+          to={`/Kanbas/Courses/${cid}/Assignments`}
+          className="btn btn-danger"
+        >
+          Save
+        </Link>
       </div>
     </div>
   );

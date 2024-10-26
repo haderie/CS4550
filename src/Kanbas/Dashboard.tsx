@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import * as db from "./Database";
-import img from "../images/NEU_logo.png";
+
 export default function Dashboard() {
   const courses = db.courses;
   return (
@@ -23,6 +23,7 @@ export default function Dashboard() {
                     src={require(`../images/${course.img}`)}
                     width="100%"
                     height={160}
+                    alt="/logo512.png"
                   />
                   <div className="card-body">
                     <h5 className="wd-dashboard-course-title card-title">

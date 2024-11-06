@@ -36,9 +36,11 @@ export default function Dashboard({
     if (enrolledCourses.includes(courseId)) {
       // Unenroll if course is currently enrolled
       dispatch(deleteEnrollment(courseId)); // Dispatch delete action
+      setEnrolledCourses(enrolledCourses.filter((id) => id !== courseId));
     } else {
       // Enroll if course is not currently enrolled
       dispatch(addEnrollment({ user: currentUser._id, course: courseId })); // Dispatch add action
+      setEnrolledCourses([...enrolledCourses, courseId]);
     }
   };
 

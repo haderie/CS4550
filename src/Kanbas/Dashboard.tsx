@@ -20,15 +20,15 @@ export default function Dashboard({
   updateCourse: () => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = db;
+  const { enrollments } = useSelector((state: any) => state.enrollmentreducer);
   const dispatch = useDispatch();
 
   const [showAllCourses, setShowAllCourses] = useState(false);
 
   const [enrolledCourses, setEnrolledCourses] = useState(
     enrollments
-      .filter((enrollment) => enrollment.user === currentUser._id)
-      .map((enrollment) => enrollment.course)
+      .filter((enrollment: any) => enrollment.user === currentUser._id)
+      .map((enrollment: any) => enrollment.course)
   );
   const toggleEnrollmentsView = () => setShowAllCourses(!showAllCourses);
 
@@ -36,7 +36,7 @@ export default function Dashboard({
     if (enrolledCourses.includes(courseId)) {
       // Unenroll if course is currently enrolled
       dispatch(deleteEnrollment(courseId)); // Dispatch delete action
-      setEnrolledCourses(enrolledCourses.filter((id) => id !== courseId));
+      setEnrolledCourses(enrolledCourses.filter((id: any) => id !== courseId));
     } else {
       // Enroll if course is not currently enrolled
       dispatch(addEnrollment({ user: currentUser._id, course: courseId })); // Dispatch add action

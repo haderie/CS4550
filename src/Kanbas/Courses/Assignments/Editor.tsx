@@ -1,9 +1,53 @@
 import { Link, useParams } from "react-router-dom";
-import { assignments } from "../../Database";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addAssignment, updateAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const assignment = assignments.find((assignment) => assignment._id === aid);
+  const dispatch = useDispatch();
+  const isNew = aid === "new";
+
+  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+
+  // Find existing assignment if not new
+  const existingAssignment = !isNew
+    ? assignments.find((assignment: any) => assignment._id === aid)
+    : null;
+
+  //const { modules } = useSelector((state: any) => state.modulesReducer);
+
+  const [asgnValue, setAsgnValue] = useState({
+    title: "",
+    description: "",
+    points: 0,
+    assignmentType: "Assignments",
+    dueDate: "",
+    availableFrom: "",
+    availableUntil: "",
+    submissionType: "",
+    submissionOptions: {
+      textEntry: false,
+      websiteURL: false,
+      mediaRecordings: false,
+      studentAnnotation: false,
+      fileUploads: false,
+    },
+    ...existingAssignment,
+  });
+
+  const handleSave = () => {
+    const assignmentData = {
+      _id: new Date().getTime().toString(),
+      ...asgnValue,
+      course: cid,
+    };
+    if (isNew) {
+      dispatch(addAssignment(assignmentData));
+    } else {
+      dispatch(updateAssignment(assignmentData));
+    }
+  };
 
   return (
     <div id="wd-assignments-editor" className="container mt-4">
@@ -16,13 +60,22 @@ export default function AssignmentEditor() {
             <input
               id="wd-name"
               className="form-control mb-2"
-              value={assignment?.title}
+              value={asgnValue.title}
+              onChange={(e) =>
+                setAsgnValue({ ...asgnValue, title: e.target.value })
+              }
               placeholder="Insert assignment title"
             />
           </div>
 
-          <textarea id="wd-description" className="form-control mb-2">
-            {assignment?.description}
+          <textarea
+            id="wd-description"
+            className="form-control mb-2"
+            onChange={(e) =>
+              setAsgnValue({ ...asgnValue, description: e.target.value })
+            }
+          >
+            {asgnValue.description}
           </textarea>
         </div>
       </div>
@@ -38,7 +91,10 @@ export default function AssignmentEditor() {
               <input
                 id="wd-points"
                 className="form-control mb-2"
-                value={assignment?.points}
+                value={asgnValue.points}
+                onChange={(e) =>
+                  setAsgnValue({ ...asgnValue, points: Number(e.target.value) })
+                }
                 placeholder="Enter points"
               />
             </div>
@@ -55,7 +111,10 @@ export default function AssignmentEditor() {
               <select
                 id="wd-group"
                 className="form-select mb-2"
-                value={assignment?.assignmentType}
+                value={asgnValue.assignmentType}
+                onChange={(e) =>
+                  setAsgnValue({ ...asgnValue, assignmentType: e.target.value })
+                }
               >
                 <option value={"Assignments"}> Assignments</option>
                 <option value={"Quiz"}> Quiz</option>
@@ -89,7 +148,13 @@ export default function AssignmentEditor() {
                 <select
                   id="wd-submission-type"
                   className="form-select mb-4 mt-3"
-                  value={assignment?.submissionType}
+                  value={asgnValue.submissionType}
+                  onChange={(e) =>
+                    setAsgnValue({
+                      ...asgnValue,
+                      submissionType: e.target.value,
+                    })
+                  }
                 >
                   <option value={"Online"}> Online</option>
                   <option value={"In-Person"}> In-Person</option>
@@ -110,7 +175,16 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-text-entry"
                     className="me-1"
-                    checked={assignment?.submissionOptions?.textEntry}
+                    checked={asgnValue.submissionOptions?.textEntry}
+                    onChange={(e) =>
+                      setAsgnValue({
+                        ...asgnValue,
+                        submissionOptions: {
+                          ...asgnValue.submissionOptions,
+                          textEntry: e.target.checked,
+                        },
+                      })
+                    }
                   />
                   <label htmlFor="wd-text-entry"> Text Entry</label>
                 </div>
@@ -121,7 +195,16 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-website-url"
                     className="me-1"
-                    checked={assignment?.submissionOptions?.websiteURL}
+                    checked={asgnValue.submissionOptions?.websiteURL}
+                    onChange={(e) =>
+                      setAsgnValue({
+                        ...asgnValue,
+                        submissionOptions: {
+                          ...asgnValue.submissionOptions,
+                          websiteURL: e.target.checked,
+                        },
+                      })
+                    }
                   />
                   <label htmlFor="wd-website-url"> Website URL</label>
                 </div>
@@ -132,7 +215,16 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-media-recordings"
                     className="me-1"
-                    checked={assignment?.submissionOptions?.mediaRecordings}
+                    checked={asgnValue.submissionOptions?.mediaRecordings}
+                    onChange={(e) =>
+                      setAsgnValue({
+                        ...asgnValue,
+                        submissionOptions: {
+                          ...asgnValue.submissionOptions,
+                          mediaRecordings: e.target.checked,
+                        },
+                      })
+                    }
                   />
                   <label htmlFor="wd-media-recordings"> Media Recordings</label>
                 </div>
@@ -143,7 +235,16 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-student-annotation"
                     className="me-1"
-                    checked={assignment?.submissionOptions?.studentAnnotation}
+                    checked={asgnValue.submissionOptions?.studentAnnotation}
+                    onChange={(e) =>
+                      setAsgnValue({
+                        ...asgnValue,
+                        submissionOptions: {
+                          ...asgnValue.submissionOptions,
+                          studentAnnotation: e.target.checked,
+                        },
+                      })
+                    }
                   />
                   <label htmlFor="wd-student-annotation">
                     {" "}
@@ -157,7 +258,16 @@ export default function AssignmentEditor() {
                     name="check-entry"
                     id="wd-file-upload"
                     className="me-1"
-                    checked={assignment?.submissionOptions?.fileUploads}
+                    checked={asgnValue.submissionOptions?.fileUploads}
+                    onChange={(e) =>
+                      setAsgnValue({
+                        ...asgnValue,
+                        submissionOptions: {
+                          ...asgnValue.submissionOptions,
+                          fileUploads: e.target.checked,
+                        },
+                      })
+                    }
                   />
                   <label htmlFor="wd-file-upload"> File Uploads</label>
                 </div>
@@ -194,7 +304,13 @@ export default function AssignmentEditor() {
                   type="datetime-local"
                   id="wd-due-date"
                   className="form-control"
-                  value={assignment?.dueDate}
+                  value={asgnValue.dueDate}
+                  onChange={(e) =>
+                    setAsgnValue({
+                      ...asgnValue,
+                      dueDate: e.target.value,
+                    })
+                  }
                 />
               </div>
 
@@ -209,7 +325,13 @@ export default function AssignmentEditor() {
                       type="datetime-local"
                       id="wd-available-from"
                       className="form-control"
-                      value={assignment?.availableFrom}
+                      value={asgnValue.availableFrom}
+                      onChange={(e) =>
+                        setAsgnValue({
+                          ...asgnValue,
+                          availableFrom: e.target.value,
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -223,7 +345,13 @@ export default function AssignmentEditor() {
                       type="datetime-local"
                       id="wd-available-until"
                       className="form-control"
-                      value={assignment?.availableUntil}
+                      value={asgnValue.availableUntil}
+                      onChange={(e) =>
+                        setAsgnValue({
+                          ...asgnValue,
+                          availableUntil: e.target.value,
+                        })
+                      }
                     />
                   </div>
                 </div>
@@ -243,6 +371,7 @@ export default function AssignmentEditor() {
         </Link>
         <Link
           to={`/Kanbas/Courses/${cid}/Assignments`}
+          onClick={handleSave}
           className="btn btn-danger"
         >
           Save

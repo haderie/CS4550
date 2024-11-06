@@ -1,4 +1,3 @@
-import { courses } from "../Database";
 import { Routes, Route, Navigate, useParams, useLocation } from "react-router";
 import Home from "./Home";
 import Modules from "./Modules";
@@ -7,10 +6,12 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import PeopleTable from "./People/Table";
 import { FaAlignJustify } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
-export default function Courses() {
+export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const { pathname } = useLocation();
 
@@ -31,7 +32,9 @@ export default function Courses() {
             <Route path="Home" element={<Home />} />
             <Route path="Modules" element={<Modules />} />
             <Route path="Assignments" element={<Assignments />} />
-            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+            {currentUser.role === "FACULTY" && (
+              <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+            )}
             <Route path="People" element={<PeopleTable />} />
           </Routes>
         </div>

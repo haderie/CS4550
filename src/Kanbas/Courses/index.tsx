@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const { pathname } = useLocation();
 
@@ -32,9 +31,7 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="Home" element={<Home />} />
             <Route path="Modules" element={<Modules />} />
             <Route path="Assignments" element={<Assignments />} />
-            {currentUser.role === "FACULTY" && (
-              <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-            )}
+            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
             <Route path="People" element={<PeopleTable />} />
           </Routes>
         </div>

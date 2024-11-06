@@ -55,30 +55,64 @@ export default function Assignments() {
         {assignments
           .filter((asgn: any) => asgn.course === cid)
           .map((asgn: any) => (
-            <li className="wd-assignment-list-item list-group-item p-3 ps-1">
+            <li
+              className="wd-assignment-list-item list-group-item p-3 ps-1"
+              key={asgn._id}
+            >
               <div className="d-flex justify-content-between align-items-center">
-                <Link
-                  className="wd-assignment-link d-flex justify-content-between align-items-center text-decoration-none text-dark"
-                  to={`/Kanbas/Courses/${cid}/Assignments/${asgn._id}`}
-                >
-                  <div className="d-flex align-items-center">
-                    <AssignmentControlButtons />
-                    <div className="ms-2">
-                      <h4>
-                        <b>{asgn.title}</b>
-                      </h4>
-                      <h5>
-                        <span className="text-danger"> Multiple Modules </span>{" "}
-                        | <b>Not available</b> Until{" "}
-                        {formatDate(asgn.availableFrom)} |
-                      </h5>
-                      <h5>
-                        <b>Due</b> {formatDate(asgn.dueDate)} | {asgn.points}{" "}
-                        pts
-                      </h5>
+                {currentUser.role === "FACULTY" ? (
+                  // Clickable link for FACULTY
+                  <Link
+                    className="wd-assignment-link d-flex justify-content-between align-items-center text-decoration-none text-dark"
+                    to={`/Kanbas/Courses/${cid}/Assignments/${asgn._id}`}
+                  >
+                    <div className="d-flex align-items-center">
+                      <AssignmentControlButtons />
+                      <div className="ms-2">
+                        <h4>
+                          <b>{asgn.title}</b>
+                        </h4>
+                        <h5>
+                          <span className="text-danger">
+                            {" "}
+                            Multiple Modules{" "}
+                          </span>{" "}
+                          | <b>Not available</b> Until{" "}
+                          {formatDate(asgn.availableFrom)} |
+                        </h5>
+                        <h5>
+                          <b>Due</b> {formatDate(asgn.dueDate)} | {asgn.points}{" "}
+                          pts
+                        </h5>
+                      </div>
+                    </div>
+                  </Link>
+                ) : (
+                  // Non-clickable div for non-FACULTY roles
+                  <div className="wd-assignment-link d-flex justify-content-between align-items-center text-dark">
+                    <div className="d-flex align-items-center">
+                      <AssignmentControlButtons />
+                      <div className="ms-2">
+                        <h4>
+                          <b>{asgn.title}</b>
+                        </h4>
+                        <h5>
+                          <span className="text-danger">
+                            {" "}
+                            Multiple Modules{" "}
+                          </span>{" "}
+                          | <b>Not available</b> Until{" "}
+                          {formatDate(asgn.availableFrom)} |
+                        </h5>
+                        <h5>
+                          <b>Due</b> {formatDate(asgn.dueDate)} | {asgn.points}{" "}
+                          pts
+                        </h5>
+                      </div>
                     </div>
                   </div>
-                </Link>
+                )}
+
                 {currentUser.role === "FACULTY" && (
                   <AssignmentButtons
                     assignmentName={asgn.title}

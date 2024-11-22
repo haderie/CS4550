@@ -1,4 +1,5 @@
 import React from "react";
+import Y from "./Y";
 
 function Lab1() {
   const q = [
@@ -11,12 +12,7 @@ function Lab1() {
     <div id="wd-lab1">
       <h2>Lab 1</h2>
       <h3>HTML Examples</h3>
-      <ul>
-        {q.map((s, d) => (
-          <li key={d}>{s.w}</li>
-        ))}
-      </ul>
-
+      <Y />
       <div id="wd-h-tag">
         <h4>Heading Tags</h4>
         Text documents are often broken up into several sections and

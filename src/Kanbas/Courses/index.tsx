@@ -6,7 +6,6 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import PeopleTable from "./People/Table";
 import { FaAlignJustify } from "react-icons/fa6";
-import { useSelector } from "react-redux";
 
 export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams();

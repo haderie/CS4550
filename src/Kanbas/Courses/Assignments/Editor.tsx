@@ -1,7 +1,9 @@
 import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -9,6 +11,13 @@ export default function AssignmentEditor() {
   const isNew = aid === "new";
 
   const { assignments } = useSelector((state: any) => state.assignmentReducer);
+
+  // const fetchAssignments = async () => {
+  //   const assignments = await coursesClient.findAssignmentForCourse(
+  //     cid as string
+  //   );
+  //   setAssignments(assignments);
+  // };
 
   // Find existing assignment if not new
   const existingAssignment = !isNew
@@ -36,6 +45,24 @@ export default function AssignmentEditor() {
     ...existingAssignment,
   });
 
+  const createAssignmentForCourse = async () => {
+    const assignmentData = {
+      _id: new Date().getTime().toString(),
+      ...asgnValue,
+      course: cid,
+    };
+    const assignment = await coursesClient.createAssignmentForCourse(
+      cid,
+      assignmentData
+    );
+    dispatch(addAssignment(assignment));
+  };
+
+  const updateAssignmentForCourse = async (assignment: any) => {
+    await assignmentsClient.updateAssignment(assignment);
+    dispatch(updateAssignment(assignment));
+  };
+
   const handleSave = () => {
     const assignmentData = {
       _id: new Date().getTime().toString(),
@@ -43,11 +70,13 @@ export default function AssignmentEditor() {
       course: cid,
     };
     if (isNew) {
-      dispatch(addAssignment(assignmentData));
+      createAssignmentForCourse();
     } else {
-      dispatch(updateAssignment(assignmentData));
+      updateAssignmentForCourse(asgnValue);
     }
   };
+
+  useEffect(() => {}, [assignments]);
 
   return (
     <div id="wd-assignments-editor" className="container mt-4">

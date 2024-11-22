@@ -7,10 +7,14 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAssignment } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+import { useEffect, useState } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  const [assignments, setAssignments] = useState<any[]>([]);
+
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
@@ -25,6 +29,22 @@ export default function Assignments() {
       hour12: true,
     });
   };
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentForCourse(
+      cid as string
+    );
+    setAssignments(assignments);
+  };
+
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [assignments]);
 
   return (
     <div
@@ -118,7 +138,7 @@ export default function Assignments() {
                     assignmentName={asgn.title}
                     assignmentID={asgn._id}
                     deleteAssignment={(assignmentID) => {
-                      dispatch(deleteAssignment(assignmentID));
+                      removeAssignment(assignmentID);
                     }}
                   />
                 )}

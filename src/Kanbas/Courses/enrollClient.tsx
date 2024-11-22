@@ -7,6 +7,11 @@ export const fetchAllEnrollments = async () => {
   return data;
 };
 
+export const getUserEnrollments = async (userId: any) => {
+  const { data } = await axios.get(`${ENROLLMENTS_API}/${userId}`);
+  return data;
+};
+
 export const enrollUserInCourse = async (userId: string, courseId: string) => {
   const { data } = await axios.put(`${ENROLLMENTS_API}/${userId}/${courseId}`);
   return data;

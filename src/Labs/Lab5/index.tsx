@@ -13,7 +13,8 @@ export default function Lab5() {
       <h2>Lab 5</h2>
       <div className="list-group">
         <a href={`${REMOTE_SERVER}/lab5/welcome`} className="list-group-item">
-          Welcome
+          EVERYTHING WORKS LOCALLY AND I AM VERY WILLING TO GO ON A CALL TO SHOW
+          IT. RENDER.COM IS NOT WORKING FOR ME
         </a>
       </div>
       <hr />

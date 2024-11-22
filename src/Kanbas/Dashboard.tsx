@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import * as db from "./Database";
 import { useState } from "react";
 import { addEnrollment, deleteEnrollment } from "./Courses/reducer";
 

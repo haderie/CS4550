@@ -5,8 +5,7 @@ import KanbasNavigation from "./Navigation";
 import Courses from "./Courses";
 import "./styles.css";
 import { useEffect, useState } from "react";
-import store from "./store";
-import { Provider, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import ProtectedCoursesRoute from "./Courses/ProtectedCourseRoute";
 import Session from "./Account/session";
@@ -14,6 +13,7 @@ import * as courseClient from "./Courses/client";
 import * as userClient from "./Account/client";
 
 export default function Kanbas() {
+  const [showAllCourses, setShowAllCourses] = useState(false);
   const [courses, setCourses] = useState<any[]>([]);
   const [course, setCourse] = useState<any>({
     _id: "1234",
@@ -50,9 +50,18 @@ export default function Kanbas() {
       console.error(error);
     }
   };
+  const fetchAllCourses = async () => {
+    const courses = await courseClient.fetchAllCourses();
+    setCourses(courses);
+  };
+
   useEffect(() => {
-    fetchCourses();
-  }, [currentUser]);
+    if (showAllCourses) {
+      fetchAllCourses();
+    } else {
+      fetchCourses();
+    }
+  }, [currentUser, showAllCourses]);
 
   return (
     <Session>
@@ -68,11 +77,14 @@ export default function Kanbas() {
                 <ProtectedRoute>
                   <Dashboard
                     courses={courses}
+                    setCourses={setCourses}
                     course={course}
                     setCourse={setCourse}
                     addNewCourse={addNewCourse}
                     deleteCourse={deleteCourse}
                     updateCourse={updateCourse}
+                    showAllCourses={showAllCourses}
+                    setShowAllCourses={setShowAllCourses}
                   />
                 </ProtectedRoute>
               }

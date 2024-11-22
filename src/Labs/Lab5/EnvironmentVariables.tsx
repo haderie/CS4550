@@ -3,7 +3,10 @@ export default function EnvironmentVariables() {
   return (
     <div id="wd-environment-variables">
       <h3>Environment Variables</h3>
-      <p>Remote Server: {REMOTE_SERVER}</p>
+      <p>
+        Remote Server: {REMOTE_SERVER}{" "}
+        https://kanbas-node-server-app-dvlf.onrender.com/
+      </p>
       <hr />
     </div>
   );

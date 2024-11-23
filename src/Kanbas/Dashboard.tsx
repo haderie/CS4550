@@ -6,6 +6,8 @@ import { addEnrollment, deleteEnrollment } from "./Courses/reducer";
 import * as enrollClient from "./Courses/enrollClient";
 
 export default function Dashboard({
+  enrollments1,
+  setEnrollments,
   courses,
   course,
   showAllCourses,
@@ -16,6 +18,8 @@ export default function Dashboard({
   deleteCourse,
   updateCourse,
 }: {
+  enrollments1: any[];
+  setEnrollments: (enrollments1: any) => void;
   courses: any[];
   course: any;
   showAllCourses: boolean;
@@ -27,7 +31,7 @@ export default function Dashboard({
   updateCourse: () => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const [enrollments1, setEnrollments] = useState<any[]>([]);
+  //const [enrollments1, setEnrollments] = useState<any[]>([]);
 
   const fetchAllEnrollments = async () => {
     const courses = await enrollClient.fetchAllEnrollments();
@@ -50,13 +54,13 @@ export default function Dashboard({
     };
     await enrollClient.enrollUserInCourse(currentUser._id, courseId);
     dispatch(addEnrollment({ user: enrollment._id, course: courseId }));
-    await enrollClient.fetchAllEnrollments();
+    fetchAllEnrollments(); // Refresh enrollments
   };
 
   const unenrollUserInCourse = async (courseId: any) => {
     await enrollClient.unenrollUserInCourse(currentUser._id, courseId);
     dispatch(deleteEnrollment(courseId));
-    enrollClient.fetchAllEnrollments();
+    fetchAllEnrollments(); // Refresh enrollments
   };
 
   useEffect(() => {

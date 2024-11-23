@@ -11,9 +11,13 @@ import ProtectedCoursesRoute from "./Courses/ProtectedCourseRoute";
 import Session from "./Account/session";
 import * as courseClient from "./Courses/client";
 import * as userClient from "./Account/client";
+import * as enrollClient from "./Courses/enrollClient";
 
 export default function Kanbas() {
   const [showAllCourses, setShowAllCourses] = useState(false);
+  const { enrollments } = useSelector((state: any) => state.enrollmentreducer);
+  const [enrollments1, setEnrollments] = useState<any[]>([]);
+
   const [courses, setCourses] = useState<any[]>([]);
   const [course, setCourse] = useState<any>({
     _id: "1234",
@@ -27,10 +31,12 @@ export default function Kanbas() {
     const newCourse = await userClient.createCourse(course);
     setCourses([...courses, newCourse]);
   };
-  const deleteCourse = (courseId: any) => {
+  const deleteCourse = async (courseId: string) => {
+    const status = await courseClient.deleteCourse(courseId);
     setCourses(courses.filter((course) => course._id !== courseId));
   };
-  const updateCourse = () => {
+  const updateCourse = async () => {
+    await courseClient.updateCourse(course);
     setCourses(
       courses.map((c) => {
         if (c._id === course._id) {
@@ -55,13 +61,23 @@ export default function Kanbas() {
     setCourses(courses);
   };
 
+  const getUserEnrollments = async () => {
+    const userEnrollments = await enrollClient.getUserEnrollments(
+      currentUser._id
+    );
+    setEnrollments(userEnrollments);
+  };
+
   useEffect(() => {
+    if (currentUser) {
+      getUserEnrollments();
+    }
     if (showAllCourses) {
       fetchAllCourses();
     } else {
       fetchCourses();
     }
-  }, [currentUser, showAllCourses]);
+  }, [currentUser, showAllCourses, enrollments1, courses]);
 
   return (
     <Session>
@@ -76,6 +92,8 @@ export default function Kanbas() {
               element={
                 <ProtectedRoute>
                   <Dashboard
+                    enrollments1={enrollments1}
+                    setEnrollments={setEnrollments}
                     courses={courses}
                     setCourses={setCourses}
                     course={course}

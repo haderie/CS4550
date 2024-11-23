@@ -81,7 +81,6 @@ export default function Assignments() {
             >
               <div className="d-flex justify-content-between align-items-center">
                 {currentUser.role === "FACULTY" ? (
-                  // Clickable link for FACULTY
                   <Link
                     className="wd-assignment-link d-flex justify-content-between align-items-center text-decoration-none text-dark"
                     to={`/Kanbas/Courses/${cid}/Assignments/${asgn._id}`}

@@ -1,10 +1,18 @@
 import React from "react";
+import Y from "./Y";
 
 function Lab1() {
+  const q = [
+    { a: 1, w: "g" },
+    { a: 2, w: "t" },
+    { a: 1, w: "j" },
+  ];
+
   return (
     <div id="wd-lab1">
       <h2>Lab 1</h2>
       <h3>HTML Examples</h3>
+      <Y />
       <div id="wd-h-tag">
         <h4>Heading Tags</h4>
         Text documents are often broken up into several sections and

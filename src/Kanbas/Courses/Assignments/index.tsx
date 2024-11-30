@@ -1,16 +1,22 @@
-import LessonControlButtons from "../Modules/LessonControlButtons";
+import AssignmentButtons from "./AssignmentButtons";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import AssignmentBar from "./AssignmentBar";
 import SearchBar from "./SearchBar";
 import { BsGripVertical, BsPlus } from "react-icons/bs";
 import { IoEllipsisVertical } from "react-icons/io5";
-import * as db from "../../Database";
 import { Link, useParams } from "react-router-dom";
-
-const assignment = db.assignments;
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAssignment } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+import { useEffect, useState } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
+  const [assignments, setAssignments] = useState<any[]>([]);
+
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const formatDate = (newDate: string | number | Date) => {
     const date = new Date(newDate);
@@ -23,6 +29,22 @@ export default function Assignments() {
       hour12: true,
     });
   };
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentForCourse(
+      cid as string
+    );
+    setAssignments(assignments);
+  };
+
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [assignments]);
 
   return (
     <div
@@ -50,32 +72,76 @@ export default function Assignments() {
       </div>
 
       <ul id="wd-assignment-list" className="list-group rounded-0">
-        {assignment
+        {assignments
           .filter((asgn: any) => asgn.course === cid)
           .map((asgn: any) => (
-            <li className="wd-assignment-list-item list-group-item p-3 ps-1">
-              <Link
-                className="wd-assignment-link d-flex justify-content-between align-items-center text-decoration-none text-dark"
-                to={`/Kanbas/Courses/${cid}/Assignments/${asgn._id}`}
-              >
-                <div className="d-flex align-items-center">
-                  <AssignmentControlButtons />
-                  <div className="ms-2">
-                    <h4>
-                      <b>{asgn.title}</b>
-                    </h4>
-                    <h5>
-                      <span className="text-danger"> Multiple Modules </span> |{" "}
-                      <b>Not available</b> Until{" "}
-                      {formatDate(asgn.availableFrom)} |
-                    </h5>
-                    <h5>
-                      <b>Due</b> {formatDate(asgn.dueDate)} | {asgn.points} pts
-                    </h5>
+            <li
+              className="wd-assignment-list-item list-group-item p-3 ps-1"
+              key={asgn._id}
+            >
+              <div className="d-flex justify-content-between align-items-center">
+                {currentUser.role === "FACULTY" ? (
+                  <Link
+                    className="wd-assignment-link d-flex justify-content-between align-items-center text-decoration-none text-dark"
+                    to={`/Kanbas/Courses/${cid}/Assignments/${asgn._id}`}
+                  >
+                    <div className="d-flex align-items-center">
+                      <AssignmentControlButtons />
+                      <div className="ms-2">
+                        <h4>
+                          <b>{asgn.title}</b>
+                        </h4>
+                        <h5>
+                          <span className="text-danger">
+                            {" "}
+                            Multiple Modules{" "}
+                          </span>{" "}
+                          | <b>Not available</b> Until{" "}
+                          {formatDate(asgn.availableFrom)} |
+                        </h5>
+                        <h5>
+                          <b>Due</b> {formatDate(asgn.dueDate)} | {asgn.points}{" "}
+                          pts
+                        </h5>
+                      </div>
+                    </div>
+                  </Link>
+                ) : (
+                  // Non-clickable div for non-FACULTY roles
+                  <div className="wd-assignment-link d-flex justify-content-between align-items-center text-dark">
+                    <div className="d-flex align-items-center">
+                      <AssignmentControlButtons />
+                      <div className="ms-2">
+                        <h4>
+                          <b>{asgn.title}</b>
+                        </h4>
+                        <h5>
+                          <span className="text-danger">
+                            {" "}
+                            Multiple Modules{" "}
+                          </span>{" "}
+                          | <b>Not available</b> Until{" "}
+                          {formatDate(asgn.availableFrom)} |
+                        </h5>
+                        <h5>
+                          <b>Due</b> {formatDate(asgn.dueDate)} | {asgn.points}{" "}
+                          pts
+                        </h5>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <LessonControlButtons />
-              </Link>
+                )}
+
+                {currentUser.role === "FACULTY" && (
+                  <AssignmentButtons
+                    assignmentName={asgn.title}
+                    assignmentID={asgn._id}
+                    deleteAssignment={(assignmentID) => {
+                      removeAssignment(assignmentID);
+                    }}
+                  />
+                )}
+              </div>
             </li>
           ))}
       </ul>

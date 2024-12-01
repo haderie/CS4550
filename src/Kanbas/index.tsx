@@ -61,17 +61,7 @@ export default function Kanbas() {
     setCourses(courses);
   };
 
-  const getUserEnrollments = async () => {
-    const userEnrollments = await enrollClient.getUserEnrollments(
-      currentUser._id
-    );
-    setEnrollments(userEnrollments);
-  };
-
   useEffect(() => {
-    if (currentUser) {
-      getUserEnrollments();
-    }
     if (showAllCourses) {
       fetchAllCourses();
     } else {

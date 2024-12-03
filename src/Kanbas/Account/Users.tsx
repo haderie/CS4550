@@ -49,8 +49,6 @@ export default function Users() {
     fetchUsers();
   }, [uid]);
 
-  console.log(users);
-
   return (
     <div>
       <button

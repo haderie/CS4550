@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import * as client from "../../Account/client";
 export default function PeopleDetails() {
   const { uid } = useParams();
-  console.log(uid);
   const [user, setUser] = useState<any>({});
   const [name, setName] = useState("");
   const [editing, setEditing] = useState(false);

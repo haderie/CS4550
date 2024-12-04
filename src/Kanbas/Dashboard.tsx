@@ -60,13 +60,12 @@ export default function Dashboard({
     };
     await enrollClient.enrollUserInCourse(currentUser._id, courseId);
     dispatch(addEnrollment({ user: enrollment._id, course: courseId }));
-    fetchAllEnrollments(); // Refresh enrollments
   };
 
   const unenrollUserInCourse = async (courseId: any) => {
     await enrollClient.unenrollUserInCourse(currentUser._id, courseId);
+
     dispatch(deleteEnrollment(courseId));
-    fetchAllEnrollments(); // Refresh enrollments
   };
 
   useEffect(() => {
@@ -135,8 +134,6 @@ export default function Dashboard({
       <div id="wd-dashboard-courses" className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {courses.map((course) => {
-            console.log(course._id);
-
             return (
               <div
                 className="wd-dashboard-course col"
@@ -144,10 +141,13 @@ export default function Dashboard({
               >
                 <div className="card rounded-3 overflow-hidden">
                   <img
-                    src={require(`../images/${course.img}`)}
+                    src={
+                      course.img
+                        ? require(`../images/${course.img}`)
+                        : require("../images/NEU_logo.png")
+                    }
                     width="100%"
                     height={160}
-                    alt="/logo512.png"
                   />
                   <div className="card-body">
                     <h5 className="wd-dashboard-course-title card-title">
@@ -167,22 +167,8 @@ export default function Dashboard({
                       Go{" "}
                     </Link>
 
-                    {enrolling && currentUser.role === "STUDENT" && (
+                    {!showAllCourses && currentUser.role === "STUDENT" && (
                       <>
-                        <button
-                          className={`btn float-end ${
-                            isEnrolled(course._id)
-                              ? "btn-danger"
-                              : "btn-success"
-                          }`}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            unenrollUserInCourse(course._id);
-                          }}
-                        >
-                          {isEnrolled(course._id) ? "Unenroll" : "Enroll"}
-                        </button>
-
                         {isEnrolled(course._id) ? (
                           <button
                             id="wd-edit-course-click"

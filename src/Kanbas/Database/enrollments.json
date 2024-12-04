@@ -1,7 +1,7 @@
 [
   { "_id": "1", "user": "674cbd85bd744512c0e32764", "course": "RS101" },
   { "_id": "2", "user": "674cf14aabbd01e67ed05967", "course": "RS101" },
-  { "_id": "3", "user": "345", "course": "RS101" },
+  { "_id": "3", "user": "674cf14aabbd01e67ed05968", "course": "RS101" },
   { "_id": "4", "user": "456", "course": "RS101" },
   { "_id": "5", "user": "567", "course": "RS101" },
   { "_id": "6", "user": "674cf14aabbd01e67ed05967", "course": "RS102" },

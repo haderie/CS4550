@@ -101,7 +101,7 @@ export default function Kanbas() {
     } else {
       fetchCourses();
     }
-  }, [currentUser, showAllCourses, enrollments, courses]);
+  }, [currentUser, showAllCourses, courses]);
 
   return (
     <Session>
@@ -138,7 +138,7 @@ export default function Kanbas() {
               path="Courses/:cid/*"
               element={
                 <ProtectedRoute>
-                  <ProtectedCoursesRoute>
+                  <ProtectedCoursesRoute enrollments={enrollments}>
                     <Courses courses={courses} />
                   </ProtectedCoursesRoute>
                 </ProtectedRoute>

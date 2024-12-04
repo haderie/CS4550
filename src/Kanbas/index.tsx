@@ -47,8 +47,14 @@ export default function Kanbas() {
     );
   };
 
+  const isEnrolled = (courseId: string) =>
+    enrollments.some(
+      (enrollment: any) =>
+        enrollment.user === currentUser._id && enrollment.course === courseId
+    );
+
   const updateEnrollment = async (courseId: string, enrolled: boolean) => {
-    if (enrolled) {
+    if (isEnrolled(courseId)) {
       await userClient.enrollIntoCourse(currentUser._id, courseId);
     } else {
       await userClient.unenrollFromCourse(currentUser._id, courseId);
@@ -129,7 +135,7 @@ export default function Kanbas() {
                     setShowAllCourses={setShowAllCourses}
                     enrolling={enrolling}
                     setEnrolling={setEnrolling}
-                    updateEnrollment={updateEnrollment}
+                    //updateEnrollment={updateEnrollment}
                   />
                 </ProtectedRoute>
               }

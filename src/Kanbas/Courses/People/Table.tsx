@@ -4,6 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import PeopleDetails from "./Details";
 
 export default function PeopleTable({ users = [] }: { users?: any[] }) {
+  console.log(users);
+
   return (
     <div id="wd-people-table">
       <PeopleDetails />

@@ -134,7 +134,6 @@ export default function Kanbas() {
                     showAllCourses={showAllCourses}
                     setShowAllCourses={setShowAllCourses}
                     enrolling={enrolling}
-                    setEnrolling={setEnrolling}
                     //updateEnrollment={updateEnrollment}
                   />
                 </ProtectedRoute>

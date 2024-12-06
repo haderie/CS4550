@@ -13,7 +13,7 @@ export default function Signin() {
     const user = await client.signin(credentials);
     if (!user) return;
     dispatch(setCurrentUser(user));
-    navigate("/Kanbas/Account/Users");
+    navigate("/Kanbas/Dashboard");
   };
   return (
     <div id="wd-signin-screen">

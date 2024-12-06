@@ -12,19 +12,10 @@ export default function AssignmentEditor() {
 
   const { assignments } = useSelector((state: any) => state.assignmentReducer);
 
-  // const fetchAssignments = async () => {
-  //   const assignments = await coursesClient.findAssignmentForCourse(
-  //     cid as string
-  //   );
-  //   setAssignments(assignments);
-  // };
-
   // Find existing assignment if not new
   const existingAssignment = !isNew
     ? assignments.find((assignment: any) => assignment._id === aid)
     : null;
-
-  //const { modules } = useSelector((state: any) => state.modulesReducer);
 
   const [asgnValue, setAsgnValue] = useState({
     title: "",

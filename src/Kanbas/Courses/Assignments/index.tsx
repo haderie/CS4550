@@ -6,17 +6,24 @@ import { BsGripVertical, BsPlus } from "react-icons/bs";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { setAssignments, deleteAssignment } from "./reducer";
 import * as coursesClient from "../client";
 import * as assignmentsClient from "./client";
 import { useEffect, useState } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const [assignments, setAssignments] = useState<any[]>([]);
+  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentForCourse(
+      cid as string
+    );
+    dispatch(setAssignments(assignments));
+  };
 
   const formatDate = (newDate: string | number | Date) => {
     const date = new Date(newDate);
@@ -30,13 +37,6 @@ export default function Assignments() {
     });
   };
 
-  const fetchAssignments = async () => {
-    const assignments = await coursesClient.findAssignmentForCourse(
-      cid as string
-    );
-    setAssignments(assignments);
-  };
-
   const removeAssignment = async (assignmentId: string) => {
     await assignmentsClient.deleteAssignment(assignmentId);
     dispatch(deleteAssignment(assignmentId));
@@ -44,7 +44,7 @@ export default function Assignments() {
 
   useEffect(() => {
     fetchAssignments();
-  }, [assignments]);
+  }, []);
 
   return (
     <div

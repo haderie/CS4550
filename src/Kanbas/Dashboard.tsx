@@ -19,7 +19,6 @@ export default function Dashboard({
   deleteCourse,
   updateCourse,
   enrolling,
-  setEnrolling,
 }: //updateEnrollment,
 {
   enrollments: any[];
@@ -34,7 +33,6 @@ export default function Dashboard({
   deleteCourse: (course: any) => void;
   updateCourse: () => void;
   enrolling: boolean;
-  setEnrolling: (enrolling: boolean) => void;
   //updateEnrollment: (courseId: string, enrolled: boolean) => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -45,35 +43,15 @@ export default function Dashboard({
     setEnrollments(courses);
   };
 
-  const isEnrolled = (courseId: string) =>
-    enrollments.some(
-      (enrollment: any) =>
-        enrollment.user === currentUser._id && enrollment.course === courseId
-    );
-
   const dispatch = useDispatch();
-
-  const enrollUserInCourse = async (courseId: any) => {
-    const enrollment = {
-      _id: new Date().getTime().toString(),
-      user: currentUser._id,
-      course: courseId,
-    };
-    await enrollClient.enrollUserInCourse(currentUser._id, courseId);
-    //dispatch(addEnrollment({ user: enrollment._id, course: courseId }));
-  };
-
-  const unenrollUserInCourse = async (courseId: any) => {
-    await enrollClient.unenrollUserInCourse(currentUser._id, courseId);
-
-    //dispatch(deleteEnrollment(courseId));
-  };
 
   const updateEnrollment = async (courseId: string, enrolled: boolean) => {
     if (enrolled) {
       await userClient.enrollIntoCourse(currentUser._id, courseId);
+      //dispatch(addEnrollment({ user: enrollment._id, course: courseId }));
     } else {
       await userClient.unenrollFromCourse(currentUser._id, courseId);
+      //dispatch(deleteEnrollment(courseId));
     }
     setCourses(
       courses.map((course) => {
@@ -131,22 +109,17 @@ export default function Dashboard({
           <hr />
         </>
       )}
-      {currentUser.role === "STUDENT" && (
+      {
+        //{/* currentUser.role === "STUDENT" && */}
         <>
           <button
             className="btn btn-primary float-end"
             onClick={() => setShowAllCourses(!showAllCourses)}
           >
-            {showAllCourses ? "All Courses" : "Enrollments"}
-          </button>
-          <button
-            onClick={() => setEnrolling(!enrolling)}
-            className="float-end btn btn-primary"
-          >
-            {enrolling ? "Current Enrolled" : "Now Enrolling"}
+            {showAllCourses ? "My Courses" : "Enrolling"}
           </button>
         </>
-      )}
+      }
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>{" "}
       <hr />
       <div id="wd-dashboard-courses" className="row">
@@ -185,7 +158,8 @@ export default function Dashboard({
                       Go{" "}
                     </Link>
 
-                    {!showAllCourses && currentUser.role === "STUDENT" && (
+                    {!showAllCourses && (
+                      //currentUser.role === "STUDENT" &&
                       <>
                         <button
                           onClick={(event) => {

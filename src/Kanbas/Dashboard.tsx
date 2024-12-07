@@ -169,10 +169,13 @@ export default function Dashboard({
               >
                 <div className="card rounded-3 overflow-hidden">
                   <img
-                    src={require(`../images/${course.img}`)}
+                    src={
+                      course.img
+                        ? require(`../images/${course.img}`)
+                        : require("../images/NEU_logo.png")
+                    }
                     width="100%"
                     height={160}
-                    alt="/logo512.png"
                   />
                   <div className="card-body">
                     <h5 className="wd-dashboard-course-title card-title">

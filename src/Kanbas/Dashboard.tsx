@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import * as db from "./Database";
 import { useEffect, useState } from "react";
 import { addEnrollment, deleteEnrollment } from "./Courses/reducer";
 import * as enrollClient from "./Courses/enrollClient";
@@ -18,7 +17,6 @@ export default function Dashboard({
   addNewCourse,
   deleteCourse,
   updateCourse,
-  enrolling,
 }: //updateEnrollment,
 {
   enrollments: any[];
@@ -32,11 +30,8 @@ export default function Dashboard({
   addNewCourse: () => void;
   deleteCourse: (course: any) => void;
   updateCourse: () => void;
-  enrolling: boolean;
-  //updateEnrollment: (courseId: string, enrolled: boolean) => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  //const [enrollments, setEnrollments] = useState<any[]>([]);
 
   const fetchAllEnrollments = async () => {
     const courses = await enrollClient.fetchAllEnrollments();
@@ -48,10 +43,10 @@ export default function Dashboard({
   const updateEnrollment = async (courseId: string, enrolled: boolean) => {
     if (enrolled) {
       await userClient.enrollIntoCourse(currentUser._id, courseId);
-      //dispatch(addEnrollment({ user: enrollment._id, course: courseId }));
+      dispatch(addEnrollment({ user: currentUser._id, course: courseId }));
     } else {
       await userClient.unenrollFromCourse(currentUser._id, courseId);
-      //dispatch(deleteEnrollment(courseId));
+      dispatch(deleteEnrollment(courseId));
     }
     setCourses(
       courses.map((course) => {
@@ -66,7 +61,7 @@ export default function Dashboard({
 
   useEffect(() => {
     fetchAllEnrollments();
-  }, [currentUser, enrollments]);
+  }, [currentUser]);
 
   return (
     <div id="wd-dashboard">

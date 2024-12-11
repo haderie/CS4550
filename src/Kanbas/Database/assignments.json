@@ -2,7 +2,9 @@
   {
     "id": "A101",
     "title": "Propulsion Assignment",
-    "course": "RS101",
+    "course": {
+      "$oid": "674cf5b7abbd01e67ed05972"
+    },
     "availableFrom": "2024-06-10T08:00:00",
     "dueDate": "2024-06-15T23:59:59",
     "availableUntil": "2024-06-20T23:59:59",
@@ -21,7 +23,9 @@
   {
     "id": "A102",
     "title": "Combustion Analysis",
-    "course": "RS101",
+    "course": {
+      "$oid": "674cf5b7abbd01e67ed05972"
+    },
     "availableFrom": "2024-06-10T08:00:00",
     "dueDate": "2024-06-15T23:59:59",
     "availableUntil": "2024-06-20T23:59:59",
@@ -34,7 +38,9 @@
   {
     "id": "A103",
     "title": "Nozzle Design Project",
-    "course": "RS101",
+    "course": {
+      "$oid": "674cf5b7abbd01e67ed05972"
+    },
     "availableFrom": "2024-06-10T08:00:00",
     "dueDate": "2024-06-15T23:59:59",
     "availableUntil": "2024-06-20T23:59:59",
@@ -54,7 +60,9 @@
   {
     "id": "A201",
     "title": "Aerodynamics Quiz",
-    "course": "RS102",
+    "course": {
+      "$oid": "674cf5b7abbd01e67ed05973"
+    },
     "availableFrom": "2024-06-10T08:00:00",
     "dueDate": "2024-06-15T23:59:59",
     "availableUntil": "2024-06-20T23:59:59",
@@ -67,7 +75,9 @@
   {
     "id": "A202",
     "title": "Flow Analysis",
-    "course": "RS102",
+    "course": {
+      "$oid": "674cf5b7abbd01e67ed05973"
+    },
     "availableFrom": "2024-06-10T08:00:00",
     "dueDate": "2024-06-15T23:59:59",
     "availableUntil": "2024-06-20T23:59:59",
@@ -87,7 +97,9 @@
   {
     "id": "A203",
     "title": "Heating Analysis",
-    "course": "RS102",
+    "course": {
+      "$oid": "674cf5b7abbd01e67ed05973"
+    },
     "availableFrom": "2024-06-10T08:00:00",
     "dueDate": "2024-06-15T23:59:59",
     "availableUntil": "2024-06-20T23:59:59",
@@ -100,7 +112,9 @@
   {
     "id": "A301",
     "title": "Structural Design Task",
-    "course": "RS103",
+    "course": {
+      "$oid": "674cf5b7abbd01e67ed05974"
+    },
     "availableFrom": "2024-06-10T08:00:00",
     "dueDate": "2024-06-15T23:59:59",
     "availableUntil": "2024-06-20T23:59:59",
@@ -120,7 +134,9 @@
   {
     "id": "A302",
     "title": "Orbital Calculations",
-    "course": "RS103",
+    "course": {
+      "$oid": "674cf5b7abbd01e67ed05974"
+    },
     "availableFrom": "2024-06-10T08:00:00",
     "dueDate": "2024-06-15T23:59:59",
     "availableUntil": "2024-06-20T23:59:59",
@@ -133,7 +149,9 @@
   {
     "id": "A303",
     "title": "Systems Engineering Exam",
-    "course": "RS103",
+    "course": {
+      "$oid": "674cf5b7abbd01e67ed05974"
+    },
     "availableFrom": "2024-06-10T08:00:00",
     "dueDate": "2024-06-15T23:59:59",
     "availableUntil": "2024-06-20T23:59:59",

@@ -9,7 +9,6 @@ export default function People() {
   const fetchUsers = async () => {
     const enrolledUsers = await findUsersForCourse(cid as string);
     setUsers(enrolledUsers);
-    console.log(enrolledUsers);
   };
   useEffect(() => {
     fetchUsers();

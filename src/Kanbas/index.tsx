@@ -14,9 +14,8 @@ import * as userClient from "./Account/client";
 
 export default function Kanbas() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const [showAllCourses, setShowAllCourses] = useState(false);
+  const [showAllCourses, setShowAllCourses] = useState(true);
   const [enrollments, setEnrollments] = useState<any[]>([]);
-  const [enrolling, setEnrolling] = useState<boolean>(false);
   const [courses, setCourses] = useState<any[]>([]);
   const [course, setCourse] = useState<any>({
     _id: "1234",
@@ -107,7 +106,7 @@ export default function Kanbas() {
     } else {
       fetchCourses();
     }
-  }, [currentUser, showAllCourses, courses]);
+  }, [currentUser, showAllCourses]);
 
   return (
     <Session>
@@ -133,7 +132,6 @@ export default function Kanbas() {
                     updateCourse={updateCourse}
                     showAllCourses={showAllCourses}
                     setShowAllCourses={setShowAllCourses}
-                    enrolling={enrolling}
                     //updateEnrollment={updateEnrollment}
                   />
                 </ProtectedRoute>

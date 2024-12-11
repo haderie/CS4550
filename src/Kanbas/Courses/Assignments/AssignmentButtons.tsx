@@ -1,14 +1,11 @@
 import { FaTrash } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
 import GreenCheckmark from "../Modules/GreenCheckmark";
-import DeletePopup from "./DeletePopup";
 
 export default function AssignmentButtons({
-  assignmentName,
   assignmentID,
   deleteAssignment,
 }: {
-  assignmentName: string;
   assignmentID: string;
   deleteAssignment: (assignmentID: string) => void;
 }) {
@@ -16,16 +13,12 @@ export default function AssignmentButtons({
     <div className="float-end">
       <FaTrash
         className="text-danger me-2 mb-1"
-        data-bs-toggle="modal"
-        data-bs-target="#wd-delete-assignment"
+        // data-bs-toggle="modal"
+        // data-bs-target="#wd-delete-assignment"
+        onClick={() => deleteAssignment(assignmentID)}
       />
       <GreenCheckmark />
       <IoEllipsisVertical className="fs-4" />
-      <DeletePopup
-        dialogTitle="Delete Assignment"
-        moduleName={assignmentName}
-        deleteAssignment={() => deleteAssignment(assignmentID)}
-      />
     </div>
   );
 }

@@ -95,3 +95,22 @@ export const unenrollFromCourse = async (userId: string, courseId: string) => {
   );
   return response.data;
 };
+
+export const findResponseForUser = async (userId: string, quizId: string) => {
+  const response = await axiosWithCredentials.get(
+    `${USERS_API}/${userId}/quizzes/${quizId}/grade`
+  );
+  return response.data;
+};
+
+export const createQuizResponse = async (
+  userId: string,
+  quizId: any,
+  quizResponse: any
+) => {
+  const response = await axiosWithCredentials.post(
+    `${USERS_API}/${userId}/quizzes/${quizId}/grade`,
+    quizResponse
+  );
+  return response.data;
+};

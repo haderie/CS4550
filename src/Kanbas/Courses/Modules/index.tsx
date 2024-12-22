@@ -57,66 +57,59 @@ export default function Modules() {
       <br />
 
       <ul id="wd-modules" className="list-group rounded-0">
-        {modules
-          .filter((module: any) => module.course === cid)
+        {modules.map((module: any) => (
+          <li
+            key={module._id}
+            className="wd-module list-group-item p-0 mb-5 fs-5 border-gray"
+          >
+            <div className="wd-title p-3 ps-2 bg-secondary">
+              <BsGripVertical className="me-2 fs-3" />
 
-          .map((module: any) => (
-            <li
-              key={module._id}
-              className="wd-module list-group-item p-0 mb-5 fs-5 border-gray"
-            >
-              <div className="wd-title p-3 ps-2 bg-secondary">
-                <BsGripVertical className="me-2 fs-3" />
+              {/* Show the module name if not editing */}
+              {!module.editing && module.name}
 
-                {/* Show the module name if not editing */}
-                {!module.editing && module.name}
-
-                {/* Editing input field only for faculty */}
-                {module.editing && currentUser.role === "FACULTY" && (
-                  <input
-                    className="form-control w-50 d-inline-block"
-                    onChange={(e) =>
-                      dispatch(
-                        updateModule({ ...module, name: e.target.value })
-                      )
+              {/* Editing input field only for faculty */}
+              {module.editing && currentUser.role === "FACULTY" && (
+                <input
+                  className="form-control w-50 d-inline-block"
+                  onChange={(e) =>
+                    dispatch(updateModule({ ...module, name: e.target.value }))
+                  }
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      saveModule({ ...module, editing: false });
                     }
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        saveModule({ ...module, editing: false });
-                      }
-                    }}
-                    defaultValue={module.name}
-                  />
-                )}
-
-                {/* Control buttons only for faculty */}
-                {currentUser.role === "FACULTY" && (
-                  <ModuleControlButtons
-                    moduleId={module._id}
-                    deleteModule={(moduleId) => removeModule(moduleId)}
-                    editModule={(moduleId) => dispatch(editModule(moduleId))}
-                  />
-                )}
-              </div>
-
-              {/* Lessons list */}
-              {module.lessons && (
-                <ul className="wd-lessons list-group rounded-0">
-                  {module.lessons.map((lesson: any) => (
-                    <li
-                      key={lesson._id}
-                      className="wd-lesson list-group-item p-3 ps-1"
-                    >
-                      <BsGripVertical className="me-2 fs-3" /> {lesson.name}
-                      {currentUser.role === "FACULTY" && (
-                        <LessonControlButtons />
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                  }}
+                  defaultValue={module.name}
+                />
               )}
-            </li>
-          ))}
+
+              {/* Control buttons only for faculty */}
+              {currentUser.role === "FACULTY" && (
+                <ModuleControlButtons
+                  moduleId={module._id}
+                  deleteModule={(moduleId) => removeModule(moduleId)}
+                  editModule={(moduleId) => dispatch(editModule(moduleId))}
+                />
+              )}
+            </div>
+
+            {/* Lessons list */}
+            {module.lessons && (
+              <ul className="wd-lessons list-group rounded-0">
+                {module.lessons.map((lesson: any) => (
+                  <li
+                    key={lesson._id}
+                    className="wd-lesson list-group-item p-3 ps-1"
+                  >
+                    <BsGripVertical className="me-2 fs-3" /> {lesson.name}
+                    {currentUser.role === "FACULTY" && <LessonControlButtons />}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
       </ul>
     </div>
   );

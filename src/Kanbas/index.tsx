@@ -141,9 +141,9 @@ export default function Kanbas() {
               path="Courses/:cid/*"
               element={
                 <ProtectedRoute>
-                  <ProtectedCoursesRoute enrollments={enrollments}>
-                    <Courses courses={courses} />
-                  </ProtectedCoursesRoute>
+                  {/* <ProtectedCoursesRoute enrollments={enrollments}> */}
+                  <Courses courses={courses} />
+                  {/* </ProtectedCoursesRoute> */}
                 </ProtectedRoute>
               }
             />
